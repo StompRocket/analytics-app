@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <button class="btn">Logout</button>
+      <button class="btn" @click="this.$parent.logout">Logout</button>
     </div>
     <div class="home__main">
       <div class="home__main__header">
