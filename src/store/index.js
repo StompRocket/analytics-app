@@ -9,12 +9,14 @@ export default new Vuex.Store({
      api: "https://a.stomprocket.io",
     token: false,
     uid: "",
-    properties: []
+    properties: [],
+    email: ""
   },
   mutations: {
     authData (state, auth) {
       state.uid = auth.uid,
         state.token = auth.token
+      state.email = auth.email
     },
     properties (state, props) { 
       state.properties = props
@@ -24,7 +26,7 @@ export default new Vuex.Store({
   },
   getters: {
     authData: state => { 
-      return {uid: state.uid, token: state.token}
+      return {uid: state.uid, token: state.token, email: state.email}
     },
     api: state => { 
       return state.api

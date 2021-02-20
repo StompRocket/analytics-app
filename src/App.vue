@@ -27,6 +27,7 @@ export default {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     var uid = user.uid;
+    let email = user.email
    console.log("user", uid)
    if (this.$route.path == "/auth") {
      this.$router.push("/")
@@ -48,7 +49,8 @@ export default {
    }).then(res => res.json()).then(res => {
      console.log(res)
    })
-   this.$store.commit("authData", {token: idToken, uid: uid})
+   this.$store.commit("authData", {token: idToken, uid: uid, email: email})
+   console.log(email)
 
 }).catch(function(error) {
   // Handle error
