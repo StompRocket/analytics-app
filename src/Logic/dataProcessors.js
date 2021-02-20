@@ -1,23 +1,26 @@
 
 
 const moment = require("moment")
-function createChartFromViews (views) { 
-   let sortedViews = views.sort((a, b) => {
+function createChartFromViews (views, unit) {
+    let sortedViews = views.sort((a, b) => {
         return moment(a).isBefore(moment(b))
-   })
+    })
     if (sortedViews.length <= 0) {
         return []
-    } 
-      let firstDate = moment(sortedViews[0].time)
+    }
+    let firstDate = moment(sortedViews[0].time)
     let lastDate = moment(sortedViews[sortedViews.length - 1].time)
     let dayDiff = lastDate.diff(firstDate, "days", true)
     //console.log(sortedViews)
     let standardizedViews = {}
-     let standardizedVisitors = {}
-    let unit = "hour"
+    let standardizedVisitors = {}
+    if (!unit) { 
+  unit = "hour"
     if (dayDiff > 1) {
         unit = "day"
     } 
+    }
+   
     sortedViews.forEach(view => { 
             let date = moment(view.time).startOf(unit).toISOString()
             if (standardizedViews[date]) {
@@ -37,14 +40,14 @@ function createChartFromViews (views) {
     let visitorsData = []
     Object.keys(standardizedViews).forEach(a => { 
         viewsData.push({
-            t: a,
+            t: moment(a).toDate(),
             y: standardizedViews[a].count
         })
     
     })
      Object.keys(standardizedVisitors).forEach(a => { 
         visitorsData.push({
-            t: a,
+            t: moment(a).toDate(),
             y: standardizedVisitors[a].count
         })
     

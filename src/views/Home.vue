@@ -96,7 +96,7 @@
               if (p.stats) {
                 console.log(p.stats.visitors, p.stats.views.length)
               }
-              let data = this.$dataProcessors.createChartFromViews(p.stats.views)
+              let data = this.$dataProcessors.createChartFromViews(p.stats.views, 'day')
               p.chartData = data
               return p
 
