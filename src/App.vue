@@ -3,13 +3,7 @@
 
     <router-view />
     <footer class="">
-      <div class="brand">
-        <img src="./assets/logo.png" alt="SR Logo">
-        <div>
-          <p class="SR">Stomp<span class="">Rocket</span></p>
-          <p class="product">Analytics</p>
-        </div>
-      </div>
+    <p><span class="primary">Stomp</span><span class="secondary">Rocket</span> Analytics is an open source project designed and built by <a href="https://www.ronanfuruta.com">Ronan Furuta</a></p>
 
 
     </footer>

@@ -22,7 +22,13 @@ html,body, .app {
     color: $dark;
 }
 
-
+a {
+    @include transition();
+    color: $primary;
+    &:hover {
+        color: $secondary;
+    }
+}
 .page {
     height: 100%;
 }
@@ -133,7 +139,18 @@ input:hover {
 .input__label {
     font-weight: bold;
 }
-
+.visitors {
+    color: $primary;
+}
+.primary {
+    color: $primary;
+}
+.secondary {
+    color: $secondary;
+}
+.views {
+    color: $secondary;
+}
 .app {
     padding: $spacing;
     display: grid;
@@ -284,11 +301,4 @@ margin-top: $spacing;
         align-content: center;
         //background: red;
     }
-}
-.visitors {
-    color: $primary;
-}
-
-.views {
-    color: $secondary;
 }
