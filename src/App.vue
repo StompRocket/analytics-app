@@ -3,7 +3,7 @@
 
     <router-view />
     <footer class="">
-    <p><span class="primary">Stomp</span><span class="secondary">Rocket</span> Analytics is an open source project designed and built by <a href="https://www.ronanfuruta.com">Ronan Furuta</a></p>
+    <p><span class="primary">Stomp</span><span class="secondary">Rocket</span> Analytics is an open source project designed and built by <a href="https://www.ronanfuruta.com" target="_blank">Ronan Furuta</a></p>
 
 
     </footer>
