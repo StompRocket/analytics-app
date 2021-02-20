@@ -59,7 +59,7 @@ a.brand {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     background: $primary;
-    border: none;
+   
     border-radius: $rounding;
     color: white;
     border: 4px $primary solid;
@@ -83,6 +83,26 @@ background: $secondary;
         background: $dark;
         border-color: $dark;
     }
+}
+.btn--icon {
+      @include transition();
+   
+      padding: 0.2rem 0.2rem;
+
+      background: none;
+      border: none;
+      border-radius: $rounding;
+display: flex;
+align-items: center;
+    height: 2rem;
+ 
+      display: inline;
+
+        width: auto;
+      &:hover {
+       
+           
+      }
 }
 .title--large {
     font-size: 1.5rem;
@@ -256,6 +276,13 @@ margin-top: $spacing;
     }
     canvas {
         margin: 1rem 0;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        //background: red;
     }
 }
 .visitors {

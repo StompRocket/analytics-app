@@ -25,11 +25,16 @@
       <div class="home__properties">
         <router-link v-for="property in properties" :key="property['_id']" :to="`/property/${property['_id']}`"
           class="properties__card">
-          <h2 class="name">{{property.domain}}</h2>
+          <div class="header">
+              <h2 class="name">{{property.domain}}</h2>
+          <button class="btn--icon">
+</button>
+          </div>
+        
 
           <canvas v-if="property.chartData.views && property.chartData.views.length > 1" :id="property['_id']"></canvas>
           <div class="notEnough" v-if="!property.chartData.views || property.chartData.views.length <= 1">
-          <p>Not Enough Data</p>
+            <p>Not Enough Data</p>
           </div>
           <div class="properties__statRow">
             <p class="visitors">Visitors: <span>{{property.stats.visitors}}</span></p>
@@ -60,24 +65,26 @@
         return this.$store.getters.properties
       },
       greeting() {
-      let m = this.$moment()
-	var g = null; //return g
-	
-	if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-	
-	var split_afternoon = 12 //24hr time to split the afternoon
-	var split_evening = 17 //24hr time to split the evening
-	var currentHour = parseFloat(m.format("HH"));
-	
-	if(currentHour >= split_afternoon && currentHour <= split_evening) {
-		g = "Afternoon";
-	} else if(currentHour >= split_evening) {
-		g = "Evening";
-	} else {
-		g = "Morning";
-	}
-	
-	return g;
+        let m = this.$moment()
+        var g = null; //return g
+
+        if (!m || !m.isValid()) {
+          return;
+        } //if we can't find a valid or filled moment, we return.
+
+        var split_afternoon = 12 //24hr time to split the afternoon
+        var split_evening = 17 //24hr time to split the evening
+        var currentHour = parseFloat(m.format("HH"));
+
+        if (currentHour >= split_afternoon && currentHour <= split_evening) {
+          g = "Afternoon";
+        } else if (currentHour >= split_evening) {
+          g = "Evening";
+        } else {
+          g = "Morning";
+        }
+
+        return g;
 
       }
     },
@@ -135,43 +142,53 @@
                       type: 'line',
                       data: {
                         labels: p.chartData.lables,
-                        datasets: [{
-                            label: "views",
-                            data: p.chartData.views,
-                             cubicInterpolationMode: 'monotone',
-                        tension: 0,
-                         backgroundColor: "#894d4d",
-        borderColor: "#894d4d",
-        fill: false,
-
-                          },
+                        datasets: [
                           {
                             label: "visitors",
                             data: p.chartData.visitors,
-                             cubicInterpolationMode: 'monotone',
-                        tension: 0,
-                          backgroundColor: "#d35e5d",
-        borderColor: "#d35e5d",
-        fill: false,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0,
+                            backgroundColor: "#d35e5d",
+                            borderColor: "#d35e5d",
+                            fill: false,
+
+                          },
+                          {
+                            label: "views",
+                            data: p.chartData.views,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0,
+                            backgroundColor: "#894d4d",
+                            borderColor: "#894d4d",
+                            fill: false,
 
                           }
                         ],
 
                       },
                       options: {
-                       
+legend: {
+  display: false
+},
                         scales: {
                           xAxes: [{
                             type: "time",
                             time: {
                               unit: p.chartData.unit
-                            }
+                            },
+                           gridLines: {
+                display:false
+            }
                           }],
                           yAxes: [{
 
                             ticks: {
-                              beginAtZero: true
-                            }
+                              beginAtZero: true,
+                              maxTicksLimit: 4
+                            },
+                            gridLines: {
+                display:true
+            }
                           }]
                         }
                       }
