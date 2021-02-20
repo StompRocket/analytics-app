@@ -53,6 +53,8 @@ html,body, .app {
     border-radius: $rounding;
     color: white;
     border: 4px $primary solid;
+    display: inline;
+    text-decoration: none;
 }
 .btn:hover {
 background: $secondary;

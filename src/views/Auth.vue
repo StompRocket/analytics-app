@@ -9,7 +9,7 @@
      </div>
      </div>
     
-     <button class="btn">Logout</button>
+     <a href="https://ananlytics.stomprocket.io" class="btn dark">home</a>
    </div>
    <div class="auth__main">
      <div class="auth__container">
