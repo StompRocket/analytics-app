@@ -222,11 +222,16 @@ margin-top: $spacing;
     .notEnough {
         margin-top: auto;
         
-        display: flex;
+        display: grid;
        place-content: center;
+        min-height: 8rem;
        p {
            font-size: 0.8rem;
        }
+      
+    }
+    canvas {
+        margin: 1rem 0;
     }
 }
 .visitors {

@@ -119,6 +119,9 @@
                             data: p.chartData.views,
                              cubicInterpolationMode: 'monotone',
                         tension: 0,
+                         backgroundColor: "#894d4d",
+        borderColor: "#894d4d",
+        fill: false,
 
                           },
                           {
@@ -126,6 +129,9 @@
                             data: p.chartData.visitors,
                              cubicInterpolationMode: 'monotone',
                         tension: 0,
+                          backgroundColor: "#d35e5d",
+        borderColor: "#d35e5d",
+        fill: false,
 
                           }
                         ],
