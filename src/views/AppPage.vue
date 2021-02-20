@@ -2,15 +2,15 @@
 <div class="property">
 
     <div class="property__nav">
-      <div class="brand">
+      <router-link to="/" class="brand">
         <img src="../assets/logo.png" alt="SR Logo">
         <div>
           <p class="SR">Stomp<span class="">Rocket</span></p>
           <p class="product">Analytics</p>
         </div>
-      </div>
+      </router-link>
 
-      <button class="btn">Logout</button>
+      <button class="btn">Settings</button>
     </div>
     <div class="property__timeframe">
       <p>Viewing data for</p>

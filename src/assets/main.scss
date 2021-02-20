@@ -28,11 +28,21 @@ html,body, .app {
 }
 
 .brand {
+    @include transition();
     display: flex;
     align-items: center;
     img {
         height: 4rem;
         margin-right: 1rem;
+    }
+    text-decoration: none;
+    color: $dark;
+    margin: 0;
+    padding: 0;
+}
+a.brand {
+    &:hover {
+        opacity: 0.8;
     }
 }
 .SR {
@@ -107,7 +117,7 @@ input:hover {
 .app {
     padding: $spacing;
     display: grid;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto 2rem;
     grid-row-gap: $spacing;
 }
@@ -171,7 +181,7 @@ grid-column: span 4;
 .property {
  
     display: grid;
-    grid-template-rows: 4rem 5rem 8rem 20rem 30rem 30rem;
+    grid-template-rows: 2rem 5rem 8rem 20rem 30rem 30rem;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-row-gap: $spacing;
     grid-gap: $spacing/2;
