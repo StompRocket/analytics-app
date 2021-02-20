@@ -1,0 +1,238 @@
+@charset "utf-8";
+$light: #F7F7F7;
+$dark: #1c1f33;
+$primary: #d35e5d;
+$secondary: #894d4d;
+$border: rgba(#707070, 0.36);
+$spacing: 2rem;
+$rounding: 5px;
+@mixin card {
+    background-color: white;
+    border-radius: $rounding;
+    border: $border solid 2px;
+}
+@mixin transition {
+    transition-duration: 0.2s;
+}
+html,body, .app {
+    height: 100%;
+    background: $light;
+    font-size: 1rem;
+    font-family: sans-serif;
+    color: $dark;
+}
+
+
+.page {
+    height: 100%;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    img {
+        height: 4rem;
+        margin-right: 1rem;
+    }
+}
+.SR {
+    color: $primary;
+    font-weight: bold;
+    span {
+        color: $secondary;
+    }
+    font-size: 1.3rem;
+    
+}
+.btn {
+    @include transition();
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background: $primary;
+    border: none;
+    border-radius: $rounding;
+    color: white;
+    border: 4px $primary solid;
+}
+.btn:hover {
+background: $secondary;
+}
+.btn:active {
+    border-color: $secondary;
+}
+.title--large {
+    font-size: 1.5rem;
+    
+    font-weight: bold;
+}
+.title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.input {
+    @include transition();
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 0.25rem;
+    border: $border solid 2px;
+    border-radius: $rounding;
+    margin-bottom: 1rem;
+}
+.input:focus {
+    border-color: $primary;
+        outline: none;
+}
+input:hover {
+    border-color: $secondary;
+}
+.input__label {
+    font-weight: bold;
+}
+
+.app {
+    padding: $spacing;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-rows: auto 2rem;
+    grid-row-gap: $spacing;
+}
+.home {
+    display: grid;
+    grid-template-rows: 2rem auto;
+    grid-row-gap: $spacing;
+}
+.home__nav {
+    display: flex;
+    align-items: center;
+   // margin-bottom: $spacing;
+
+    .brand {
+        margin-right: auto;
+    }
+}
+.home__main {
+    background-color: white;
+    padding: $spacing;
+    border-radius: $rounding;
+    
+   // height: 86%;
+}
+.auth__main {
+ 
+    padding: $spacing;
+    border-radius: $rounding;
+display: flex;
+align-items: center;
+justify-content: center;
+    // height: 86%;
+}
+.auth__container {
+    @include card;
+    padding: $spacing;
+    width: 20rem;
+}
+.auth__form {
+    margin-top: 2rem;
+    .btn {
+        margin-top: 0.5rem;
+    }
+}
+.home__main__header {
+    display: flex;
+    .text {
+        margin-right: auto;
+    }
+}
+.property__nav {
+    display: flex;
+    align-items: center;
+    // margin-bottom: $spacing;
+grid-column: span 4;
+    .brand {
+        margin-right: auto;
+    }
+}
+
+.property {
+ 
+    display: grid;
+    grid-template-rows: 4rem 5rem 8rem 20rem 30rem 30rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-row-gap: $spacing;
+    grid-gap: $spacing/2;
+    height: auto;
+    
+}
+.property__timeframe {
+    grid-column: span 4;
+    display: flex;
+    align-items: center
+}
+.property__stats-header {
+    @include card;
+    grid-column: span 4;
+   
+}
+.property__views-graph {
+     @include card;
+     grid-column: span 4;
+}
+.property__half-stat {
+    @include card;
+    grid-column: span 2;
+  
+}
+.property__half-quarter-stat {
+     @include card;
+     grid-column: span 1;
+}
+.home__properties {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr;
+grid-gap: $spacing/2;
+margin-top: $spacing;
+
+}
+.properties__card {
+    @include card;
+    @include transition();
+    padding: $spacing/2;
+    color: $dark;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    .name {
+        font-weight: bold;
+    }
+    &:hover {
+        background-color: $light;
+    }
+    .properties__statRow {
+        display: flex;
+        p {
+            margin-right: 1rem;
+            span {
+                font-weight: bold;
+            }
+        }
+        margin-top: auto;
+        
+    }
+    .notEnough {
+        margin-top: auto;
+        
+        display: flex;
+       place-content: center;
+       p {
+           font-size: 0.8rem;
+       }
+    }
+}
+.visitors {
+    color: $primary;
+}
+
+.views {
+    color: $secondary;
+}

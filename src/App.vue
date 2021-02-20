@@ -1,32 +1,70 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" class="app">
+
+    <router-view />
+    <footer class="">
+    <div class="brand">
+      <img  src="./assets/logo.png" alt="SR Logo">
+     <div>
+       <p class="SR">Stomp<span class="">Rocket</span></p>
+       <p class="product">Analytics</p>
+     </div>
+     </div>
+     
+
+    </footer>
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  data() {
+    return {}
+  },
+  mounted() {
+    this.$firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    var uid = user.uid;
+   console.log("user", uid)
+   if (this.$route.path == "/auth") {
+     this.$router.push("/")
+   }
+   this.$firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then((idToken) => {
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+   fetch(`${this.$store.state.api}/api/v1/user/${uid}/update`, {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+     },
+      body: JSON.stringify({
+        uid: uid, 
+        name: user.displayName,
+        email: user.email,
+        auth: idToken
+      })
+      
+   }).then(res => res.json()).then(res => {
+     console.log(res)
+   })
+   this.$store.commit("authData", {token: idToken, uid: uid})
 
-#nav {
-  padding: 30px;
+}).catch(function(error) {
+  // Handle error
+});
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  } else {
+    // User is signed out
+    // ...
+    console.log("no user")
+    if (this.$route.path != "/auth") {
+    this.$router.push("/auth")
     }
+
+  }
+});
+    
   }
 }
-</style>
+</script>
