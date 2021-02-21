@@ -186,7 +186,23 @@ input:hover {
 .views {
     color: $secondary;
 }
-
+.progressBar {
+    height: 0.5rem;
+    position: relative;
+    background: $light;
+    border-radius: 25px;
+    //padding: 10px;
+    box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+    span {
+       display: block;
+       height: 100%;
+      border-radius: 25px;
+       background-color: $primary;
+       
+       position: relative;
+       overflow: hidden;
+    }
+}
 .app {
     padding: $spacing;
     display: grid;
@@ -348,11 +364,13 @@ input:hover {
          font-weight: bold;
          text-align: right;
      }
-     progress {
+     .progressBarprogress {
          width: 100%;
          grid-column: span 2;
-     }
-}
+        
+       }
+      
+    }
 
 }
 

@@ -58,7 +58,10 @@
         <div class="table__row" v-for="page in pages" :key="page.path">
           <p class="label"> {{page.path}}</p>
           <p class="value"> {{page.views}}</p>
-          <progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>
+          <!--<progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>-->
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
 
         </div>
       </div>
@@ -73,7 +76,9 @@
         <div class="table__row" v-for="page in refferers" :key="page.path">
           <p class="label"> {{page.path}}</p>
           <p class="value"> {{page.views}}</p>
-          <progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
 
         </div>
       </div>
