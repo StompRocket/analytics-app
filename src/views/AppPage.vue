@@ -83,9 +83,57 @@
         </div>
       </div>
     </div>
-    <div class="property__half-quarter-stat"></div>
-    <div class="property__half-quarter-stat"></div>
-    <div class="property__half-quarter-stat"></div>
+    <div class="property__half-quarter-stat">
+      <div class="header">
+        <h3 class="title">Browsers</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in browsers" :key="page.path">
+          <p class="label"> {{page.name}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Platforms</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in platforms" :key="page.path">
+          <p class="label"> {{page.name}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Screen Sizes</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in screens" :key="page.path">
+          <p class="label"> {{page.width}}x{{page.height}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
     <div class="property__half-quarter-stat"></div>
 
   </div>
@@ -290,7 +338,9 @@
 
           }).then(res => res.json()).then(res => {
             // console.log(res)
-            this.browsers = res.data
+            this.browsers = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/os`, {
@@ -306,7 +356,9 @@
 
           }).then(res => res.json()).then(res => {
             //console.log(res)
-            this.os = res.data
+            this.os = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/platforms`, {
@@ -322,7 +374,9 @@
 
           }).then(res => res.json()).then(res => {
             // console.log(res)
-            this.platforms = res.data
+            this.platforms = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/screens`, {
@@ -338,7 +392,9 @@
 
           }).then(res => res.json()).then(res => {
             // console.log(res)
-            this.screens = res.data
+            this.screens = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/locations`, {

@@ -187,6 +187,7 @@ input:hover {
     color: $secondary;
 }
 .progressBar {
+    @include transition();
     height: 0.5rem;
     position: relative;
     background: $light;
@@ -194,6 +195,7 @@ input:hover {
     //padding: 10px;
     box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
     span {
+        @include transition();
        display: block;
        height: 100%;
       border-radius: 25px;
@@ -201,6 +203,7 @@ input:hover {
        
        position: relative;
        overflow: hidden;
+       width: 0%;
     }
 }
 .app {
@@ -288,7 +291,45 @@ input:hover {
     grid-gap: $spacing/2;
     height: auto;
   
+.header {
+    display: grid;
+    grid-template-columns: auto 3rem;
 
+    .key {
+        text-align: right;
+    }
+}
+
+.table {
+
+    overflow-y: scroll;
+}
+
+.table__row {
+    display: grid;
+    grid-template-columns: auto 3rem;
+    grid-template-rows: auto auto;
+    padding: 0.5rem 0;
+    grid-row-gap: 0.2rem;
+
+    .label {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .value {
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .progressBarprogress {
+        width: 100%;
+        grid-column: span 2;
+
+    }
+
+}
 }
 
 .property__timeframe {
@@ -339,44 +380,16 @@ input:hover {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 2rem auto;
-.header {
-    display: grid;
-    grid-template-columns: auto 3rem;
-    .key {
-        text-align: right;
-    }
-}
-.table {
 
-    overflow-y: scroll;
-}
-.table__row {
-    display: grid;
-     grid-template-columns: auto 3rem;
-     grid-template-rows: auto auto;
-     padding: 0.5rem 0;
-     .label {
-         white-space: nowrap;
-         text-overflow: ellipsis;
-         overflow: hidden;
-     }
-     .value {
-         font-weight: bold;
-         text-align: right;
-     }
-     .progressBarprogress {
-         width: 100%;
-         grid-column: span 2;
-        
-       }
-      
-    }
 
 }
 
 .property__half-quarter-stat {
     @include card;
     grid-column: span 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 2rem auto;
 }
 
 .home__properties {
