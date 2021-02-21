@@ -24,10 +24,30 @@
     </div>
 
     <div class="property__stats-header">
-    <div>{{visitors}}</div>
-    <div>{{totalViews}}</div>
+      <div class="header-stat">
+        <p class="value visitors">{{visitors}}</p>
+        <p class="description">visitors</p>
+      </div>
+      <div class="header-stat">
+        <p class="value views">{{totalViews}}</p>
+        <p class="description">total views</p>
+      </div>
+       
+       <div class="header-stat">
+        <p class="value">{{pages.length}}</p>
+        <p class="description">unique pages visited</p>
+      </div>
+      <div class="header-stat">
+        <p class="value">{{refferers.length}}</p>
+        <p class="description">refferers</p>
+      </div>
     </div>
-    <div class="property__views-graph"></div>
+    <div class="property__views-graph">
+    <div class="chartContainer">
+      <canvas id="propertyChart"></canvas>
+    </div>
+  
+    </div>
     <div class="property__half-stat"></div>
     <div class="property__half-stat"></div>
     <div class="property__half-quarter-stat"></div>
@@ -71,12 +91,12 @@
         switch (val) {
           case "today":
             console.log("today")
-             this.start = this.$moment().startOf('day').toISOString();
+            this.start = this.$moment().startOf('day').toISOString();
             this.end = new Date().toISOString()
             this.init()
             return
           case "yesterday":
-               this.start = this.$moment().subtract(1, 'days').startOf('day').toISOString();
+            this.start = this.$moment().subtract(1, 'days').startOf('day').toISOString();
             this.end = this.$moment().subtract(1, 'days').endOf('day').toISOString();
             this.init()
             return
@@ -86,12 +106,12 @@
             this.init()
             return
           case "last30":
-               this.start = this.$moment().subtract(30, 'days').startOf('day').toISOString();
+            this.start = this.$moment().subtract(30, 'days').startOf('day').toISOString();
             this.end = new Date().toISOString()
             this.init()
             return
           case "all":
-             this.start = new Date(2021, 1, 1).toISOString()
+            this.start = new Date(2021, 1, 1).toISOString()
             this.end = new Date().toISOString()
             this.init()
             return
@@ -119,13 +139,76 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.views = res.data
             this.visitors = res.visitors
             this.totalViews = res.totalViews
+            let chartData = this.$dataProcessors.createChartFromViews(this.views)
+            console.log(chartData)
+             var ctx = document.getElementById("propertyChart");
+                  if (ctx) {
+                    var myChart = new Chart(ctx, {
+                      type: chartData.unit == "hour" ? "bar" : "line",
+                      data: {
+                        labels: chartData.lables,
+                        datasets: [
+                          {
+                            label: "visitors",
+                            data: chartData.visitors,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0,
+                            backgroundColor: "#d35e5d",
+                            borderColor: "#d35e5d",
+                            fill: false,
+
+                          },
+                          {
+                            label: "views",
+                            data: chartData.views,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0,
+                            backgroundColor: "#894d4d",
+                            borderColor: "#894d4d",
+                            fill: false,
+
+                          }
+                        ],
+
+                      },
+                      options: {
+                        //aspectRatio: 5,
+                           responsive:true,
+    maintainAspectRatio: false,
+legend: {
+  display: false
+},
+                        scales: {
+                          xAxes: [{
+                            type: "time",
+                            time: {
+                              unit: chartData.unit
+                            },
+                           gridLines: {
+                display:false
+            }
+                          }],
+                          yAxes: [{
+
+                            ticks: {
+                              beginAtZero: true,
+                              maxTicksLimit: 6
+                            },
+                            gridLines: {
+                display:true
+            }
+                          }]
+                        }
+                      }
+                    });
+                  }
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/pages`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/pages`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -136,12 +219,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.pages = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/refferers`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/refferers`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -152,12 +235,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.refferers = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/browsers`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/browsers`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -168,12 +251,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.browsers = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/os`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/os`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -184,12 +267,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
+          }).then(res => res.json()).then(res => {
             //console.log(res)
             this.os = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/platforms`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/platforms`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -200,12 +283,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.platforms = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/screens`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/screens`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -216,12 +299,12 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
-           // console.log(res)
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
             this.screens = res.data
-          
+
           })
-           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/locations`, {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/locations`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -232,11 +315,11 @@
               auth: this.auth.token
             })
 
-          }).then(res=> res.json()).then(res => {
+          }).then(res => res.json()).then(res => {
             //console.log(res)
             this.cities = res.cities
-          this.countries = res.countries
-          this.regions = res.regions
+            this.countries = res.countries
+            this.regions = res.regions
           })
         }
       }

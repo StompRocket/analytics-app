@@ -6,15 +6,26 @@ $secondary: #894d4d;
 $border: rgba(#707070, 0.36);
 $spacing: 2rem;
 $rounding: 5px;
+
 @mixin card {
     background-color: white;
     border-radius: $rounding;
     border: $border solid 2px;
 }
+
 @mixin transition {
     transition-duration: 0.2s;
 }
-html,body, .app {
+@mixin maxWidth {
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+}
+
+html,
+body,
+.app {
     height: 100%;
     background: $light;
     font-size: 1rem;
@@ -25,10 +36,12 @@ html,body, .app {
 a {
     @include transition();
     color: $primary;
+
     &:hover {
         color: $secondary;
     }
 }
+
 .page {
     height: 100%;
 }
@@ -37,88 +50,102 @@ a {
     @include transition();
     display: flex;
     align-items: center;
+
     img {
         height: 4rem;
         margin-right: 1rem;
     }
+
     text-decoration: none;
     color: $dark;
     margin: 0;
     padding: 0;
 }
+
 a.brand {
     &:hover {
         opacity: 0.8;
     }
 }
+
 .SR {
     color: $primary;
     font-weight: bold;
+
     span {
         color: $secondary;
     }
+
     font-size: 1.3rem;
-    
+
 }
+
 .btn {
     @include transition();
     font-size: 1rem;
     padding: 0.5rem 1rem;
     background: $primary;
-   
+
     border-radius: $rounding;
     color: white;
     border: 4px $primary solid;
     display: inline;
     text-decoration: none;
 }
+
 .btn:hover {
-background: $secondary;
+    background: $secondary;
 }
+
 .btn:active {
     background: $primary;
 }
+
 .btn.dark {
     background: $dark;
     border-color: $dark;
+
     &:hover {
         background: $secondary;
-         border-color: $secondary;
+        border-color: $secondary;
     }
+
     &:active {
         background: $dark;
         border-color: $dark;
     }
 }
+
 .btn--icon {
-      @include transition();
-   
-      padding: 0.2rem 0.2rem;
+    @include transition();
 
-      background: none;
-      border: none;
-      border-radius: $rounding;
-display: flex;
-align-items: center;
+    padding: 0.2rem 0.2rem;
+
+    background: none;
+    border: none;
+    border-radius: $rounding;
+    display: flex;
+    align-items: center;
     height: 2rem;
- 
-      display: inline;
 
-        width: auto;
-      &:hover {
-       
-           
-      }
+    display: inline;
+
+    width: auto;
+
+    &:hover {}
 }
+
 .title--large {
     font-size: 1.5rem;
-    
+
     font-weight: bold;
 }
+
 .title {
     font-weight: bold;
     font-size: 1.2rem;
 }
+
 .input {
     @include transition();
     display: block;
@@ -129,28 +156,36 @@ align-items: center;
     border-radius: $rounding;
     margin-bottom: 1rem;
 }
+
 .input:focus {
     border-color: $primary;
-        outline: none;
+    outline: none;
 }
+
 input:hover {
     border-color: $secondary;
 }
+
 .input__label {
     font-weight: bold;
 }
+
 .visitors {
     color: $primary;
 }
+
 .primary {
     color: $primary;
 }
+
 .secondary {
     color: $secondary;
 }
+
 .views {
     color: $secondary;
 }
+
 .app {
     padding: $spacing;
     display: grid;
@@ -158,103 +193,148 @@ input:hover {
     grid-template-rows: auto 2rem;
     grid-row-gap: $spacing;
 }
+
 .home {
     display: grid;
     grid-template-rows: 2rem auto;
     grid-row-gap: $spacing;
+     
 }
+
 .home__nav {
     display: flex;
     align-items: center;
-   // margin-bottom: $spacing;
+    // margin-bottom: $spacing;
 
     .brand {
         margin-right: auto;
     }
 }
+
 .home__main {
     background-color: white;
     padding: $spacing;
     border-radius: $rounding;
-    
-   // height: 86%;
-}
-.auth__main {
- 
-    padding: $spacing;
-    border-radius: $rounding;
-display: flex;
-align-items: center;
-justify-content: center;
+
     // height: 86%;
 }
+
+.auth__main {
+
+    padding: $spacing;
+    border-radius: $rounding;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // height: 86%;
+}
+
 .auth__container {
     @include card;
     padding: $spacing;
     width: 20rem;
 }
+
 .auth__form {
     margin-top: 2rem;
+
     .btn {
         margin-top: 0.5rem;
     }
 }
+
 .home__main__header {
     display: flex;
+
     .text {
         margin-right: auto;
     }
 }
+
 .property__nav {
     display: flex;
     align-items: center;
     // margin-bottom: $spacing;
-grid-column: span 4;
+    grid-column: span 4;
+
     .brand {
         margin-right: auto;
     }
 }
 
 .property {
- 
+
     display: grid;
-    grid-template-rows: 2rem 5rem 8rem 20rem 30rem 30rem;
+    grid-template-rows: 2rem 5rem 8rem 30rem 30rem 30rem;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-row-gap: $spacing;
     grid-gap: $spacing/2;
     height: auto;
-    
+  
+
 }
+
 .property__timeframe {
     grid-column: span 4;
     display: flex;
     align-items: center
 }
+
 .property__stats-header {
     @include card;
     grid-column: span 4;
-   
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .header-stat {
+        text-align: center;
+
+        .value {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+    }
+
 }
+
 .property__views-graph {
-     @include card;
-     grid-column: span 4;
+    @include card;
+    grid-column: span 4;
+   
+    grid-row: span 1;
+    padding: 1rem;
+   .chartContainer {
+    position: relative;
+    width: 100%;
+   
+    height: 100%;
+    canvas {
+       
+    }
+   }
 }
+
 .property__half-stat {
     @include card;
     grid-column: span 2;
-  
-}
-.property__half-quarter-stat {
-     @include card;
-     grid-column: span 1;
-}
-.home__properties {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-gap: $spacing/2;
-margin-top: $spacing;
 
 }
+
+.property__half-quarter-stat {
+    @include card;
+    grid-column: span 1;
+}
+
+.home__properties {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: $spacing/2;
+    margin-top: $spacing;
+
+}
+
 .properties__card {
     @include card;
     @include transition();
@@ -263,37 +343,47 @@ margin-top: $spacing;
     text-decoration: none;
     display: flex;
     flex-direction: column;
+
     .name {
         font-weight: bold;
     }
+
     &:hover {
         background-color: $light;
     }
+
     .properties__statRow {
         display: flex;
+
         p {
             margin-right: 1rem;
+
             span {
                 font-weight: bold;
             }
         }
+
         margin-top: auto;
-        
+
     }
+
     .notEnough {
         margin-top: auto;
-        
+
         display: grid;
-       place-content: center;
+        place-content: center;
         min-height: 8rem;
-       p {
-           font-size: 0.8rem;
-       }
-      
+
+        p {
+            font-size: 0.8rem;
+        }
+
     }
+
     canvas {
         margin: 1rem 0;
     }
+
     .header {
         display: flex;
         justify-content: space-between;
