@@ -5,12 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-   //api: "http://localhost:3056",
+   apiBeta: "http://localhost:3056",
    api: "https://a.stomprocket.io",
     token: false,
     uid: "",
     properties: [],
-    email: ""
+    email: "",
+    beta: window.location.hostname.indexOf("localhost") > -1
   },
   mutations: {
     authData (state, auth) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
       return {uid: state.uid, token: state.token, email: state.email}
     },
     api: state => { 
+      if (state.beta) { 
+        return state.apiBeta
+      }
       return state.api
     },
     properties: state => {
