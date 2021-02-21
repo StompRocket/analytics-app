@@ -148,6 +148,7 @@
             console.log(chartData)
              var ctx = document.getElementById("propertyChart");
                   if (ctx) {
+                    console.log(chartData.unit)
                     var myChart = new Chart(ctx, {
                       type: chartData.unit == "hour" ? "bar" : "line",
                       data: {

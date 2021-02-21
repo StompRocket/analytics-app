@@ -10,12 +10,13 @@ function createChartFromViews (views, unit) {
     }
     let firstDate = moment(sortedViews[0].time)
     let lastDate = moment(sortedViews[sortedViews.length - 1].time)
-    let dayDiff = lastDate.diff(firstDate, "days", true)
+    let dayDiff = Math.abs(lastDate.diff(firstDate, "days", true))
     //console.log(sortedViews)
     let standardizedViews = {}
     let standardizedVisitors = {}
     if (!unit) { 
-  unit = "hour"
+        unit = "hour"
+        console.log("dat diff", dayDiff)
     if (dayDiff > 1) {
         unit = "day"
     } 
