@@ -1,5 +1,5 @@
 <template>
-<div class="property">
+  <div class="property">
 
     <div class="property__nav">
       <router-link to="/" class="brand">
@@ -14,12 +14,19 @@
     </div>
     <div class="property__timeframe">
       <p>Viewing data for</p>
-      <select name="" id="">
-        <option value="">Last 7 Days</option>
+      <select name="" id="" v-model="timeMode">
+        <option value="today">Today</option>
+        <option value="yesterday">Yesterday</option>
+        <option value="last7">Last 7 Days</option>
+        <option value="last30">Last 30 Days</option>
+        <option value="all">All Time</option>
       </select>
     </div>
-    
-    <div class="property__stats-header"></div>
+
+    <div class="property__stats-header">
+    <div>{{visitors}}</div>
+    <div>{{totalViews}}</div>
+    </div>
     <div class="property__views-graph"></div>
     <div class="property__half-stat"></div>
     <div class="property__half-stat"></div>
@@ -27,7 +34,212 @@
     <div class="property__half-quarter-stat"></div>
     <div class="property__half-quarter-stat"></div>
     <div class="property__half-quarter-stat"></div>
- 
-</div>
+
+  </div>
 
 </template>
+<script>
+  export default {
+    name: "propertyPage",
+    data() {
+      return {
+        timeMode: "last7",
+        start: new Date(2021, 1, 1).toISOString(),
+        end: new Date().toISOString(),
+        views: null,
+        visitors: 0,
+        totalViews: 0,
+        refferers: [],
+        pages: [],
+        browsers: [],
+        platforms: [],
+        os: [],
+        clities: [],
+        countires: [],
+        regions: [],
+        screens: [],
+      }
+    },
+    computed: {
+      auth() {
+
+        return this.$store.getters.authData
+      },
+    },
+    watch: {
+      timeMode(val) {
+        switch (val) {
+          case "today":
+            console.log("today")
+             this.start = this.$moment().startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "yesterday":
+               this.start = this.$moment().subtract(1, 'days').startOf('day').toISOString();
+            this.end = this.$moment().subtract(1, 'days').endOf('day').toISOString();
+            this.init()
+            return
+          case "last7":
+            this.start = this.$moment().subtract(7, 'days').startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "last30":
+               this.start = this.$moment().subtract(30, 'days').startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "all":
+             this.start = new Date(2021, 1, 1).toISOString()
+            this.end = new Date().toISOString()
+            this.init()
+            return
+
+        }
+      },
+      auth(val) {
+        this.init()
+      }
+    },
+    mounted() {
+      this.init()
+    },
+    methods: {
+      init() {
+        if (this.auth.token) {
+          fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/views`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.views = res.data
+            this.visitors = res.visitors
+            this.totalViews = res.totalViews
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/pages`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.pages = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/refferers`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.refferers = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/browsers`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.browsers = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/os`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+            //console.log(res)
+            this.os = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/platforms`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.platforms = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/screens`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+           // console.log(res)
+            this.screens = res.data
+          
+          })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/locations`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res=> res.json()).then(res => {
+            //console.log(res)
+            this.cities = res.cities
+          this.countries = res.countries
+          this.regions = res.regions
+          })
+        }
+      }
+    }
+  }
+</script>

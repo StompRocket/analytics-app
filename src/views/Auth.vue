@@ -9,7 +9,7 @@
      </div>
      </div>
     
-     <a href="https://ananlytics.stomprocket.io" class="btn dark">home</a>
+     <a href="https://analytics.stomprocket.io" class="btn dark">leave</a>
    </div>
    <div class="auth__main">
      <div class="auth__container">
@@ -36,6 +36,12 @@ export default {
       error: ""
     }
   },
+  computed: {
+      auth() {
+
+        return this.$store.getters.authData
+      },
+    },
   methods: {
     login() {
       if (this.email.length > 1 && this.pass.length > 1) {
@@ -51,6 +57,11 @@ export default {
     console.log(errorMessage)
   });
       }
+    }
+  },
+  mounted() {
+    if (this.auth.token) {
+      this.$router.push('/')
     }
   }
 }

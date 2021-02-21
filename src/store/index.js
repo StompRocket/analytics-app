@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-   // api: "http://localhost:3056",
-     api: "https://a.stomprocket.io",
+   //api: "http://localhost:3056",
+   api: "https://a.stomprocket.io",
     token: false,
     uid: "",
     properties: [],
