@@ -11,6 +11,7 @@ $rounding: 5px;
     background-color: white;
     border-radius: $rounding;
     border: $border solid 2px;
+    padding: 1rem;
 }
 
 @mixin transition {
@@ -319,6 +320,39 @@ input:hover {
 .property__half-stat {
     @include card;
     grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2rem auto;
+.header {
+    display: grid;
+    grid-template-columns: auto 3rem;
+    .key {
+        text-align: right;
+    }
+}
+.table {
+
+    overflow-y: scroll;
+}
+.table__row {
+    display: grid;
+     grid-template-columns: auto 3rem;
+     grid-template-rows: auto auto;
+     padding: 0.5rem 0;
+     .label {
+         white-space: nowrap;
+         text-overflow: ellipsis;
+         overflow: hidden;
+     }
+     .value {
+         font-weight: bold;
+         text-align: right;
+     }
+     progress {
+         width: 100%;
+         grid-column: span 2;
+     }
+}
 
 }
 

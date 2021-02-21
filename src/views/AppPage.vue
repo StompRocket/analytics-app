@@ -32,8 +32,8 @@
         <p class="value views">{{totalViews}}</p>
         <p class="description">total views</p>
       </div>
-       
-       <div class="header-stat">
+
+      <div class="header-stat">
         <p class="value">{{pages.length}}</p>
         <p class="description">unique pages visited</p>
       </div>
@@ -43,13 +43,41 @@
       </div>
     </div>
     <div class="property__views-graph">
-    <div class="chartContainer">
-      <canvas id="propertyChart"></canvas>
+      <div class="chartContainer">
+        <canvas id="propertyChart"></canvas>
+      </div>
+
     </div>
-  
+    <div class="property__half-stat">
+      <div class="header">
+        <h3 class="title">Pages</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in pages" :key="page.path">
+          <p class="label"> {{page.path}}</p>
+          <p class="value"> {{page.views}}</p>
+          <progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>
+
+        </div>
+      </div>
     </div>
-    <div class="property__half-stat"></div>
-    <div class="property__half-stat"></div>
+   <div class="property__half-stat">
+      <div class="header">
+        <h3 class="title">Refferers</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in refferers" :key="page.path">
+          <p class="label"> {{page.path}}</p>
+          <p class="value"> {{page.views}}</p>
+          <progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>
+
+        </div>
+      </div>
+    </div>
     <div class="property__half-quarter-stat"></div>
     <div class="property__half-quarter-stat"></div>
     <div class="property__half-quarter-stat"></div>
@@ -146,68 +174,67 @@
             this.totalViews = res.totalViews
             let chartData = this.$dataProcessors.createChartFromViews(this.views)
             console.log(chartData)
-             var ctx = document.getElementById("propertyChart");
-                  if (ctx) {
-                    console.log(chartData.unit)
-                    var myChart = new Chart(ctx, {
-                      type: chartData.unit == "hour" ? "bar" : "line",
-                      data: {
-                        labels: chartData.lables,
-                        datasets: [
-                          {
-                            label: "visitors",
-                            data: chartData.visitors,
-                            cubicInterpolationMode: 'monotone',
-                            tension: 0,
-                            backgroundColor: "#d35e5d",
-                            borderColor: "#d35e5d",
-                            fill: false,
+            var ctx = document.getElementById("propertyChart");
+            if (ctx) {
+              console.log(chartData.unit)
+              var myChart = new Chart(ctx, {
+                type: chartData.unit == "hour" ? "bar" : "line",
+                data: {
+                  labels: chartData.lables,
+                  datasets: [{
+                      label: "visitors",
+                      data: chartData.visitors,
+                      cubicInterpolationMode: 'monotone',
+                      tension: 0,
+                      backgroundColor: "#d35e5d",
+                      borderColor: "#d35e5d",
+                      fill: false,
 
-                          },
-                          {
-                            label: "views",
-                            data: chartData.views,
-                            cubicInterpolationMode: 'monotone',
-                            tension: 0,
-                            backgroundColor: "#894d4d",
-                            borderColor: "#894d4d",
-                            fill: false,
+                    },
+                    {
+                      label: "views",
+                      data: chartData.views,
+                      cubicInterpolationMode: 'monotone',
+                      tension: 0,
+                      backgroundColor: "#894d4d",
+                      borderColor: "#894d4d",
+                      fill: false,
 
-                          }
-                        ],
+                    }
+                  ],
 
+                },
+                options: {
+                  //aspectRatio: 5,
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  legend: {
+                    display: false
+                  },
+                  scales: {
+                    xAxes: [{
+                      type: "time",
+                      time: {
+                        unit: chartData.unit
                       },
-                      options: {
-                        //aspectRatio: 5,
-                           responsive:true,
-    maintainAspectRatio: false,
-legend: {
-  display: false
-},
-                        scales: {
-                          xAxes: [{
-                            type: "time",
-                            time: {
-                              unit: chartData.unit
-                            },
-                           gridLines: {
-                display:false
-            }
-                          }],
-                          yAxes: [{
-
-                            ticks: {
-                              beginAtZero: true,
-                              maxTicksLimit: 6
-                            },
-                            gridLines: {
-                display:true
-            }
-                          }]
-                        }
+                      gridLines: {
+                        display: false
                       }
-                    });
+                    }],
+                    yAxes: [{
+
+                      ticks: {
+                        beginAtZero: true,
+                        maxTicksLimit: 6
+                      },
+                      gridLines: {
+                        display: true
+                      }
+                    }]
                   }
+                }
+              });
+            }
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/pages`, {
             method: "POST",
@@ -222,7 +249,9 @@ legend: {
 
           }).then(res => res.json()).then(res => {
             // console.log(res)
-            this.pages = res.data
+            this.pages = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/refferers`, {
@@ -238,7 +267,9 @@ legend: {
 
           }).then(res => res.json()).then(res => {
             // console.log(res)
-            this.refferers = res.data
+            this.refferers = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
 
           })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/browsers`, {

@@ -8,9 +8,11 @@ function createChartFromViews (views, unit) {
     if (sortedViews.length <= 0) {
         return []
     }
-    let firstDate = moment(sortedViews[0].time)
-    let lastDate = moment(sortedViews[sortedViews.length - 1].time)
-    let dayDiff = Math.abs(lastDate.diff(firstDate, "days", true))
+    let arrayFirst = moment(sortedViews[0].time)
+    let arrayLast = moment(sortedViews[sortedViews.length - 1].time)
+    let firstDate = arrayLast.isAfter(arrayFirst) ? arrayFirst : arrayLast;
+    let lastDate = arrayLast.isAfter(arrayFirst) ? arrayLast : arrayFirst;
+    let dayDiff = lastDate.diff(firstDate, "days", true)
     //console.log(sortedViews)
     let standardizedViews = {}
     let standardizedVisitors = {}
@@ -37,6 +39,16 @@ function createChartFromViews (views, unit) {
             }
         }
     })
+/*
+    let workingDay = moment(firstDate)
+
+    do { 
+        workingDay = workingDay.add(1, unit)
+        console.log("day", unit, workingDay.format("MMMM Do YYYY, h:mm:ss a"))
+
+    } while (workingDay.isSame(lastDate, unit))
+*/
+
     let viewsData = []
     let visitorsData = []
     Object.keys(standardizedViews).forEach(a => { 
@@ -60,6 +72,8 @@ function createChartFromViews (views, unit) {
     let sortedVisitors = visitorsData.sort((a, b) => { 
         return moment(a.t).isBefore(moment(b.t))
     })
+
+
     //console.log(standardizedViews, viewsData)
     return {
         views: sortedViews, 
