@@ -159,6 +159,7 @@
         countires: [],
         regions: [],
         screens: [],
+        chart: false
       }
     },
     computed: {
@@ -209,6 +210,13 @@
     methods: {
       init() {
         if (this.auth.token) {
+       
+         if (this.chart) {
+           console.log(this.chart)
+            this.chart.destroy()
+             this.chart = false
+         }
+         
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/views`, {
             method: "POST",
             headers: {
@@ -230,7 +238,7 @@
             var ctx = document.getElementById("propertyChart");
             if (ctx) {
               console.log(chartData.unit)
-              var myChart = new Chart(ctx, {
+              this.chart = new Chart(ctx, {
                 type: chartData.unit == "hour" ? "bar" : "line",
                 data: {
                   labels: chartData.lables,
