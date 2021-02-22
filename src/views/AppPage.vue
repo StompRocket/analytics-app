@@ -119,6 +119,23 @@
     </div>
     <div class="property__half-quarter-stat">
     <div class="header">
+        <h3 class="title">Operating Systems</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in os" :key="page.name">
+          <p class="label"> {{page.name}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="property__half-quarter-stat">
+    <div class="header">
         <h3 class="title">Screen Sizes</h3>
         <p class="key">views</p>
       </div>
@@ -134,6 +151,7 @@
         </div>
       </div>
     </div>
+       
     <div class="property__half-quarter-stat">
     <div class="header">
         <h3 class="title">Countries</h3>
