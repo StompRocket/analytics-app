@@ -29,13 +29,13 @@ function createChartFromViews (views, unit) {
             if (standardizedViews[date]) {
                 standardizedViews[date].count++
             } else { 
-                standardizedViews[date] = {count: 0, key: date}
+                standardizedViews[date] = {count: 1, key: date}
             }
         if (view.landing) { 
  if (standardizedVisitors[date]) {
                 standardizedVisitors[date].count++
             } else { 
-                standardizedVisitors[date] = {count: 0, key: date}
+                standardizedVisitors[date] = {count: 1, key: date}
             }
         }
     })
