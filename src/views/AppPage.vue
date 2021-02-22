@@ -90,7 +90,7 @@
       </div>
 
       <div class="table">
-        <div class="table__row" v-for="page in browsers" :key="page.path">
+        <div class="table__row" v-for="page in browsers" :key="page.name">
           <p class="label"> {{page.name}}</p>
           <p class="value"> {{page.views}}</p>
           <div class="progressBar">
@@ -107,7 +107,7 @@
       </div>
 
       <div class="table">
-        <div class="table__row" v-for="page in platforms" :key="page.path">
+        <div class="table__row" v-for="page in platforms" :key="page.name">
           <p class="label"> {{page.name}}</p>
           <p class="value"> {{page.views}}</p>
           <div class="progressBar">
@@ -124,7 +124,7 @@
       </div>
 
       <div class="table">
-        <div class="table__row" v-for="page in screens" :key="page.path">
+        <div class="table__row" v-for="page in screens" :key="page.width + ',' + page.height">
           <p class="label"> {{page.width}}x{{page.height}}</p>
           <p class="value"> {{page.views}}</p>
           <div class="progressBar">
@@ -134,8 +134,57 @@
         </div>
       </div>
     </div>
-    <div class="property__half-quarter-stat"></div>
+    <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Countries</h3>
+        <p class="key">views</p>
+      </div>
 
+      <div class="table">
+        <div class="table__row" v-for="page in countries" :key="page.location.country">
+          <p class="label"> {{page.location.country}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+ <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Regions</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in regions" :key="page.location.region + ','+ page.location.country">
+          <p class="label"> {{page.location.region}} / {{page.location.country}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+     <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Cities</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in cities" :key="page.location.city + ','+ page.location.region">
+          <p class="label"> {{page.location.city}} / {{page.location.region}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -156,7 +205,7 @@
         platforms: [],
         os: [],
         clities: [],
-        countires: [],
+        countries: [],
         regions: [],
         screens: [],
         chart: false
@@ -418,9 +467,15 @@
 
           }).then(res => res.json()).then(res => {
             //console.log(res)
-            this.cities = res.cities
-            this.countries = res.countries
-            this.regions = res.regions
+            this.cities = res.cities.sort((a,b)=> {
+              return a.views < b.views
+            })
+            this.countries = res.countries.sort((a,b)=> {
+              return a.views < b.views
+            })
+            this.regions = res.regions.sort((a,b)=> {
+              return a.views < b.views
+            })
           })
         }
       }
