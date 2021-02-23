@@ -9,12 +9,14 @@
           <p class="product">Analytics</p>
         </div>
       </router-link>
-
+<div class="property__nav__domain">
+<p class="title">{{domain}}</p>
+</div>
       <button class="btn">Settings</button>
     </div>
     <div class="property__timeframe">
       <p>Viewing data for</p>
-      <select name="" id="" v-model="timeMode">
+      <select name="" id="" v-model="timeMode" @change="timeModeUpdate()">
         <option value="today">Today</option>
         <option value="yesterday">Yesterday</option>
         <option value="last7">Last 7 Days</option>
@@ -151,7 +153,23 @@
         </div>
       </div>
     </div>
-       
+        <div class="property__half-quarter-stat">
+    <div class="header">
+        <h3 class="title">Languages</h3>
+        <p class="key">views</p>
+      </div>
+
+      <div class="table">
+        <div class="table__row" v-for="page in languages" :key="page.name">
+          <p class="label"> {{page.name}}</p>
+          <p class="value"> {{page.views}}</p>
+          <div class="progressBar">
+          <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
     <div class="property__half-quarter-stat">
     <div class="header">
         <h3 class="title">Countries</h3>
@@ -222,11 +240,13 @@
         browsers: [],
         platforms: [],
         os: [],
-        clities: [],
+        cities: [],
         countries: [],
         regions: [],
         screens: [],
-        chart: false
+        languages: [],
+        chart: false,
+        domain: ""
       }
     },
     computed: {
@@ -236,37 +256,7 @@
       },
     },
     watch: {
-      timeMode(val) {
-        switch (val) {
-          case "today":
-            console.log("today")
-            this.start = this.$moment().startOf('day').toISOString();
-            this.end = new Date().toISOString()
-            this.init()
-            return
-          case "yesterday":
-            this.start = this.$moment().subtract(1, 'days').startOf('day').toISOString();
-            this.end = this.$moment().subtract(1, 'days').endOf('day').toISOString();
-            this.init()
-            return
-          case "last7":
-            this.start = this.$moment().subtract(7, 'days').startOf('day').toISOString();
-            this.end = new Date().toISOString()
-            this.init()
-            return
-          case "last30":
-            this.start = this.$moment().subtract(30, 'days').startOf('day').toISOString();
-            this.end = new Date().toISOString()
-            this.init()
-            return
-          case "all":
-            this.start = new Date(2021, 1, 1).toISOString()
-            this.end = new Date().toISOString()
-            this.init()
-            return
-
-        }
-      },
+     
       auth(val) {
         this.init()
       }
@@ -298,6 +288,7 @@
           }).then(res => res.json()).then(res => {
             // console.log(res)
             this.views = res.data
+            this.domain = res.domain
             this.visitors = res.visitors
             this.totalViews = res.totalViews
             let chartData = this.$dataProcessors.createChartFromViews(this.views)
@@ -472,6 +463,24 @@
             })
 
           })
+           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/languages`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: this.start,
+              to: this.end,
+              auth: this.auth.token
+            })
+
+          }).then(res => res.json()).then(res => {
+            // console.log(res)
+            this.languages = res.data.sort((a,b)=> {
+              return a.views < b.views
+            })
+
+          })
           fetch(`${this.$store.getters.api}/api/v1/data/${this.$route.params.id}/locations`, {
             method: "POST",
             headers: {
@@ -496,7 +505,39 @@
             })
           })
         }
-      }
+      },
+       timeModeUpdate() {
+         const val = this.timeMode
+        switch (val) {
+          case "today":
+            console.log("today")
+            this.start = this.$moment().startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "yesterday":
+            this.start = this.$moment().subtract(1, 'days').startOf('day').toISOString();
+            this.end = this.$moment().subtract(1, 'days').endOf('day').toISOString();
+            this.init()
+            return
+          case "last7":
+            this.start = this.$moment().subtract(7, 'days').startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "last30":
+            this.start = this.$moment().subtract(30, 'days').startOf('day').toISOString();
+            this.end = new Date().toISOString()
+            this.init()
+            return
+          case "all":
+            this.start = new Date(2021, 1, 1).toISOString()
+            this.end = new Date().toISOString()
+            this.init()
+            return
+
+        }
+      },
     }
   }
 </script>

@@ -6,7 +6,11 @@ $secondary: #894d4d;
 $border: rgba(#707070, 0.36);
 $spacing: 2rem;
 $rounding: 5px;
-
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 @mixin card {
     background-color: white;
     border-radius: $rounding;
@@ -134,6 +138,32 @@ a.brand {
     width: auto;
 
     &:hover {}
+}
+select {
+    // A reset of styles, including removing the default dropdown arrow
+    appearance: none;
+    display: block;
+    border: none;
+
+  @include transition();
+  font-size: 1rem;
+  padding: 0.125rem 0.125rem;
+  background: $primary;
+
+  border-radius: $rounding;
+  color: white;
+  border: 4px $primary solid;
+  display: inline;
+  text-decoration: none;
+  &:hover {
+      background: $secondary;
+      border-color: $secondary;
+  }
+  &:active {
+      background: $primary;
+      border-color: $primary;
+  }
+   
 }
 
 .title--large {
@@ -331,11 +361,16 @@ input:hover {
 
 }
 }
-
+.property__nav__domain {
+    margin-right: auto;
+}
 .property__timeframe {
     grid-column: span 4;
     display: flex;
-    align-items: center
+    align-items: center;
+    p {
+        margin-right: 1rem;
+    }
 }
 
 .property__stats-header {
@@ -456,4 +491,7 @@ input:hover {
         align-content: center;
         //background: red;
     }
+}
+.footer {
+    font-size: 1rem;
 }
