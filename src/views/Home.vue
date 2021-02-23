@@ -31,8 +31,10 @@
 </button>
           </div>
         
-
-          <canvas v-if="property.chartData.views && property.chartData.views.length > 1" :id="property['_id']"></canvas>
+<div class="chartContainer" v-if="property.chartData.views && property.chartData.views.length > 1">
+<canvas  :id="property['_id']"></canvas>
+</div>
+          
           <div class="notEnough" v-if="!property.chartData.views || property.chartData.views.length <= 1">
             <p>Not Enough Data</p>
           </div>
@@ -167,6 +169,8 @@
 
                       },
                       options: {
+                        responsive: true,
+                  maintainAspectRatio: false,
 legend: {
   display: false
 },
