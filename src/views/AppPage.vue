@@ -41,7 +41,7 @@
       </div>
       <div class="header-stat">
         <p class="value">{{refferers.length}}</p>
-        <p class="description">refferers</p>
+        <p class="description">referrers</p>
       </div>
     </div>
     <div class="property__views-graph">
@@ -58,7 +58,7 @@
 
       <div class="table">
         <div class="table__row" v-for="page in pages" :key="page.path">
-          <p class="label"> {{page.path}}</p>
+          <a class="label" :href="'http://'+domain + page.path" target="_blank"  rel="noopener noreferrer nofollow" > {{page.path}}</a>
           <p class="value"> {{page.views}}</p>
           <!--<progress :max="totalViews" :value="page.views"> {{page.views/totalViews}}% </progress>-->
           <div class="progressBar">
@@ -70,13 +70,13 @@
     </div>
    <div class="property__half-stat">
       <div class="header">
-        <h3 class="title">Refferers</h3>
+        <h3 class="title">Referrers</h3>
         <p class="key">views</p>
       </div>
 
       <div class="table">
         <div class="table__row" v-for="page in refferers" :key="page.path">
-          <p class="label"> {{page.path}}</p>
+          <a class="label" :href="page.path" target="_blank"  rel="noopener nofollow" > {{page.path}}</a>
           <p class="value"> {{page.views}}</p>
           <div class="progressBar">
           <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>
@@ -161,7 +161,7 @@
 
       <div class="table">
         <div class="table__row" v-for="page in languages" :key="page.name">
-          <p class="label"> {{page.name}}</p>
+          <p class="label"> {{page.formattedName}}</p>
           <p class="value"> {{page.views}}</p>
           <div class="progressBar">
           <span :style="{'width': (page.views/totalViews) * 100 + '%'}"></span>

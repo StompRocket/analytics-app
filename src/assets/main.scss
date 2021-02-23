@@ -341,16 +341,35 @@ input:hover {
     grid-template-rows: auto auto;
     padding: 0.5rem 0;
     grid-row-gap: 0.2rem;
-
+//background: orange;
+//border: black 1px solid;
     .label {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+       
     }
+    a.label {
+        cursor: pointer;
+        text-decoration: none;
+    color: $dark;
+    &:hover {
+        color: $secondary;
+        text-decoration: underline;
+    }
+    &:active {
+        border: none;
+        outline: none;
+    }
+}
 
     .value {
         font-weight: bold;
         text-align: right;
+        grid-row: span 2;
+       // background: red;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
     .progressBarprogress {
