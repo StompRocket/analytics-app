@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import NewPage from '../views/New.vue'
 import AuthPage from '../views/Auth.vue'
 import AppPage from '../views/AppPage.vue'
 Vue.use(VueRouter)
@@ -10,6 +11,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+    {
+    path: '/new',
+    name: 'New',
+    component: NewPage
   },
   {
     path: "/property/:id",

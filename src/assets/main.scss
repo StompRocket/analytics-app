@@ -6,11 +6,7 @@ $secondary: #894d4d;
 $border: rgba(#707070, 0.36);
 $spacing: 2rem;
 $rounding: 5px;
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+
 @mixin card {
     background-color: white;
     border-radius: $rounding;
@@ -27,6 +23,18 @@ $rounding: 5px;
       margin-left: auto;
       margin-right: auto;
 }
+@mixin link {
+    @include transition();
+    color: $primary;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 1rem;
+
+    &:hover {
+        color: $secondary;
+    }
+}
 
 html,
 body,
@@ -39,12 +47,12 @@ body,
 }
 
 a {
-    @include transition();
-    color: $primary;
+    @include link();
+  
+}
 
-    &:hover {
-        color: $secondary;
-    }
+.link {
+    @include link;
 }
 
 .page {
@@ -90,16 +98,19 @@ a.brand {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     background: $primary;
-
+place-content: center;
     border-radius: $rounding;
     color: white;
     border: 4px $primary solid;
-    display: inline;
+    display: grid;
     text-decoration: none;
+    text-align: center;
+    
 }
 
 .btn:hover {
     background: $secondary;
+    color: white;
 }
 
 .btn:active {
@@ -176,7 +187,15 @@ select {
     font-weight: bold;
     font-size: 1.2rem;
 }
-
+.label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    span {
+      //  color: gray;
+       font-size: 1rem;
+        font-weight: normal;
+    }
+}
 .input {
     @include transition();
     display: block;
@@ -185,7 +204,7 @@ select {
     padding: 0.5rem 0.25rem;
     border: $border solid 2px;
     border-radius: $rounding;
-    margin-bottom: 1rem;
+    
 }
 
 .input:focus {
@@ -288,12 +307,16 @@ input:hover {
 
 .auth__form {
     margin-top: 2rem;
-
+.lable {
+    margin-bottom: 1rem;
+}
     .btn {
         margin-top: 0.5rem;
     }
 }
-
+.error {
+    color: $secondary;
+}
 .home__main__header {
     display: flex;
 
@@ -526,6 +549,27 @@ height: 19rem;
 .footer {
     font-size: 1rem;
 }
+.back {
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.newPropertyForm {
+    margin-top: 2rem;
+    max-width: 700px;
+ .exclude {
+  //   float: right;
+ }
+ .btn {
+     display: block;
+     margin-top: 2rem;
+ }
+ label {
+     display: block;
+     margin-top: 1.5rem;
+ }
+}
+
 
 @media only screen and (max-width: 1550px) {
 .home__properties {

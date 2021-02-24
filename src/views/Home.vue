@@ -18,7 +18,7 @@
           <h1 class="title--large">Good {{greeting}}</h1>
           <p class="">{{date}}</p>
         </div>
-        <button class="btn">Add Site</button>
+        <router-link to="/new" class="btn">Add Site</router-link>
 
 
       </div>

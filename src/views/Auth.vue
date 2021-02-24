@@ -16,9 +16,9 @@
        <h1 class="title--large">Login</h1>
       <form @submit.prevent="login" class="auth__form">
         <label class="input__label" for="email">Email</label>
-        <input class="input" id="email" type="email" placeholder="hello@stomprocket.io" v-model="email">
+        <input class="input" id="email" type="email" placeholder="hello@stomprocket.io" v-model="email" required>
          <label class="input__label" for="pass" placeholder="password">Password</label>
-        <input class="input" id="pass" type="password" v-model="pass">
+        <input class="input" id="pass" type="password" v-model="pass" required>
         <button class="btn" type="submit">Submit</button>
       </form>
      </div>
