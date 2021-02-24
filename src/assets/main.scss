@@ -16,6 +16,7 @@ $rounding: 5px;
 
 @mixin transition {
     transition-duration: 0.2s;
+    transition-timing-function: ease;
 }
 @mixin maxWidth {
       width: 100%;
