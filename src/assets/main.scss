@@ -187,15 +187,19 @@ select {
     font-weight: bold;
     font-size: 1.2rem;
 }
+form {
 .label {
     font-weight: bold;
     font-size: 1.1rem;
+
     span {
-      //  color: gray;
-       font-size: 1rem;
+        //  color: gray;
+        font-size: 1rem;
         font-weight: normal;
     }
 }
+}
+
 .input {
     @include transition();
     display: block;
