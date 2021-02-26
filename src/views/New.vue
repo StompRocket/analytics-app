@@ -103,7 +103,7 @@ fetch(`${this.$store.getters.api}/api/v1/ip`).then(res => res.json()).then(res =
    }).then(res => res.json()).then(res => {
        console.log(res)
        if (res.success) {
-         this.$router.push("/property/"+ res.id)
+         this.$router.push({path: "/property/"+ res.id, params: {newProp: true}})
        } else {
          this.domainError = res.error
        }

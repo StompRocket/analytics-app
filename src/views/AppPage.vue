@@ -230,7 +230,7 @@
     data() {
       return {
         timeMode: "last7",
-        start: new Date(2021, 1, 1).toISOString(),
+        start: this.$moment().subtract(7, 'days').startOf('day').toISOString(),
         end: new Date().toISOString(),
         views: null,
         visitors: 0,
@@ -250,6 +250,14 @@
       }
     },
     computed: {
+      newProp() {
+        if (this.$router.params.newProp) {
+          return true
+        } else {
+return false
+        }
+         
+      },
       auth() {
 
         return this.$store.getters.authData

@@ -53,6 +53,7 @@
   import "chart.js"
   export default {
     name: "Home",
+  
     data() {
       return {
         date: ""
